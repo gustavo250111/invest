@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invest Analyzer</title>
+</head>
+<body>
+    <h1>Analisador de Ações</h1>
+
+    <label>P/L:</label>
+    <input id="pl"><br><br>
+
+    <label>P/VP:</label>
+    <input id="pvp"><br><br>
+
+    <button onclick="analisar()">Analisar</button>
+
+    <h2 id="resultado"></h2>
+
+    <script>
+        function analisar() {
+            let nota = 0;
+
+            if (Number(document.getElementById("pl").value) < 15)
+                nota++;
+
+            if (Number(document.getElementById("pvp").value) < 1.5)
+                nota++;
+
+            document.getElementById("resultado").innerHTML =
+                "Nota da ação: " + nota + "/2";
+        }
+    </script>
+</body>
+</html>
