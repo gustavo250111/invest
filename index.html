@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -7,119 +8,138 @@
 
 <style>
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, sans-serif;
-}
-
-html{
-    scroll-behavior:smooth;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
 }
 
 body{
-    background:#0d1117;
-    color:white;
+background:#0d1117;
+color:white;
+min-height:100vh;
 }
 
 header{
-    padding:25px;
-    text-align:center;
-    background:#161b22;
-    box-shadow:0 0 20px rgba(0,0,0,.4);
+background:#161b22;
+padding:30px;
+text-align:center;
+border-bottom:1px solid #30363d;
 }
 
 header h1{
-    color:#58a6ff;
+color:#58a6ff;
+margin-bottom:10px;
 }
 
 .search{
-    max-width:600px;
-    margin:40px auto;
-    display:flex;
-    gap:10px;
+max-width:700px;
+margin:40px auto;
+display:flex;
+gap:10px;
+padding:0 20px;
 }
 
-input{
-    flex:1;
-    padding:15px;
-    border:none;
-    border-radius:10px;
-    background:#21262d;
-    color:white;
+.search input{
+flex:1;
+padding:15px;
+border:none;
+border-radius:12px;
+background:#21262d;
+color:white;
+font-size:16px;
 }
 
-button{
-    padding:15px 25px;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    background:#238636;
-    color:white;
-    font-weight:bold;
+.search button{
+padding:15px 25px;
+border:none;
+border-radius:12px;
+background:#238636;
+color:white;
+cursor:pointer;
+font-weight:bold;
 }
 
 .card{
-    max-width:900px;
-    margin:20px auto;
-    background:#161b22;
-    padding:25px;
-    border-radius:20px;
-    box-shadow:0 0 15px rgba(0,0,0,.3);
+max-width:900px;
+margin:20px auto;
+background:#161b22;
+padding:30px;
+border-radius:20px;
+box-shadow:0 0 15px rgba(0,0,0,.4);
 }
 
 .nota{
-    font-size:3rem;
-    color:#58a6ff;
-    font-weight:bold;
+font-size:50px;
+font-weight:bold;
+color:#58a6ff;
+margin:15px 0;
 }
 
-.lista{
-    margin-top:20px;
+.barra{
+width:100%;
+height:20px;
+background:#21262d;
+border-radius:999px;
+overflow:hidden;
+margin-bottom:20px;
 }
 
-.good{
-    color:#3fb950;
-}
-
-.bad{
-    color:#f85149;
+.progresso{
+height:100%;
+background:#238636;
 }
 
 .info{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:15px;
-    margin-top:25px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-top:20px;
 }
 
 .box{
-    background:#21262d;
-    padding:15px;
-    border-radius:10px;
+background:#21262d;
+padding:15px;
+border-radius:10px;
+}
+
+.good{
+color:#3fb950;
+margin-top:20px;
+}
+
+.bad{
+color:#f85149;
+margin-top:20px;
+}
+
+ul{
+margin-left:20px;
+margin-top:10px;
 }
 
 footer{
-    text-align:center;
-    padding:40px;
-    color:gray;
+text-align:center;
+padding:40px;
+color:#8b949e;
 }
 </style>
+
 </head>
 
 <body>
 
 <header>
 <h1>📈 INVEST ANALYZER</h1>
-<p>Análise Fundamentalista</p>
+<p>Análise Fundamentalista de Ações</p>
 </header>
 
-<section class="search">
-<input id="ticker" placeholder="Digite PETR4, VALE3...">
+<div class="search">
+<input id="ticker" placeholder="Digite PETR4, VALE3 ou BBAS3">
 <button onclick="analisar()">Analisar</button>
-</section>
+</div>
 
-<section id="resultado"></section>
+<div id="resultado"></div>
 
 <footer>
 Invest Analyzer © 2026
@@ -171,31 +191,31 @@ document.getElementById("ticker")
 const acao = acoes[ticker];
 
 if(!acao){
-document.getElementById("resultado").innerHTML=
-`
-<div class="card">
-<h2>Ação não encontrada</h2>
-</div>
-`;
+document.getElementById("resultado").innerHTML =
+'<div class="card"><h2>❌ Ação não encontrada</h2><p>Tente PETR4, VALE3 ou BBAS3.</p></div>';
 return;
 }
 
-let nota = 0;
+let pontos = 0;
 
-if(acao.pl < 15) nota++;
-if(acao.pvp < 1.5) nota++;
-if(acao.dy > 5) nota++;
-if(acao.roe > 15) nota++;
+if(acao.pl < 15) pontos++;
+if(acao.pvp < 1.5) pontos++;
+if(acao.dy > 5) pontos++;
+if(acao.roe > 15) pontos++;
 
-nota = (nota/4*10).toFixed(1);
+let nota = ((pontos/4)*10).toFixed(1);
 
-document.getElementById("resultado").innerHTML=
-`
+document.getElementById("resultado").innerHTML = `
+
 <div class="card">
 
 <h2>${acao.nome}</h2>
 
 <div class="nota">${nota}/10 ⭐</div>
+
+<div class="barra">
+<div class="progresso" style="width:${nota*10}%"></div>
+</div>
 
 <div class="info">
 
@@ -208,7 +228,7 @@ document.getElementById("resultado").innerHTML=
 </div>
 
 <div class="box">
-<b>DY</b><br>${acao.dy}%
+<b>Dividend Yield</b><br>${acao.dy}%
 </div>
 
 <div class="box">
@@ -225,19 +245,16 @@ document.getElementById("resultado").innerHTML=
 
 </div>
 
-<div class="lista">
+<h3 class="good">✅ Pontos Positivos</h3>
 
-<h3 class="good">✅ Pontos positivos</h3>
 <ul>
 ${acao.pl < 15 ? "<li>P/L saudável</li>" : ""}
 ${acao.pvp < 1.5 ? "<li>P/VP atrativo</li>" : ""}
-${acao.dy > 5 ? "<li>Dividend Yield elevado</li>" : ""}
-${acao.roe > 15 ? "<li>ROE forte</li>" : ""}
+${acao.dy > 5 ? "<li>Dividend Yield acima de 5%</li>" : ""}
+${acao.roe > 15 ? "<li>ROE acima de 15%</li>" : ""}
 </ul>
 
-<h3 class="bad" style="margin-top:20px">
-❌ Pontos negativos
-</h3>
+<h3 class="bad">❌ Pontos Negativos</h3>
 
 <ul>
 ${acao.pl >= 15 ? "<li>P/L elevado</li>" : ""}
@@ -248,8 +265,8 @@ ${acao.roe <= 15 ? "<li>ROE baixo</li>" : ""}
 
 </div>
 
-</div>
 `;
+
 }
 
 </script>
