@@ -1,34 +1,258 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Invest Analyzer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invest Analyzer</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#0d1117;
+    color:white;
+}
+
+header{
+    padding:25px;
+    text-align:center;
+    background:#161b22;
+    box-shadow:0 0 20px rgba(0,0,0,.4);
+}
+
+header h1{
+    color:#58a6ff;
+}
+
+.search{
+    max-width:600px;
+    margin:40px auto;
+    display:flex;
+    gap:10px;
+}
+
+input{
+    flex:1;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#21262d;
+    color:white;
+}
+
+button{
+    padding:15px 25px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    background:#238636;
+    color:white;
+    font-weight:bold;
+}
+
+.card{
+    max-width:900px;
+    margin:20px auto;
+    background:#161b22;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 0 15px rgba(0,0,0,.3);
+}
+
+.nota{
+    font-size:3rem;
+    color:#58a6ff;
+    font-weight:bold;
+}
+
+.lista{
+    margin-top:20px;
+}
+
+.good{
+    color:#3fb950;
+}
+
+.bad{
+    color:#f85149;
+}
+
+.info{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:15px;
+    margin-top:25px;
+}
+
+.box{
+    background:#21262d;
+    padding:15px;
+    border-radius:10px;
+}
+
+footer{
+    text-align:center;
+    padding:40px;
+    color:gray;
+}
+</style>
 </head>
+
 <body>
-    <h1>Analisador de Ações</h1>
 
-    <label>P/L:</label>
-    <input id="pl"><br><br>
+<header>
+<h1>📈 INVEST ANALYZER</h1>
+<p>Análise Fundamentalista</p>
+</header>
 
-    <label>P/VP:</label>
-    <input id="pvp"><br><br>
+<section class="search">
+<input id="ticker" placeholder="Digite PETR4, VALE3...">
+<button onclick="analisar()">Analisar</button>
+</section>
 
-    <button onclick="analisar()">Analisar</button>
+<section id="resultado"></section>
 
-    <h2 id="resultado"></h2>
+<footer>
+Invest Analyzer © 2026
+</footer>
 
-    <script>
-        function analisar() {
-            let nota = 0;
+<script>
 
-            if (Number(document.getElementById("pl").value) < 15)
-                nota++;
+const acoes = {
 
-            if (Number(document.getElementById("pvp").value) < 1.5)
-                nota++;
+PETR4:{
+nome:"Petrobras PN",
+pl:6.2,
+pvp:1.2,
+dy:12.5,
+roe:23,
+preco:34.50,
+justo:42.10
+},
 
-            document.getElementById("resultado").innerHTML =
-                "Nota da ação: " + nota + "/2";
-        }
-    </script>
+VALE3:{
+nome:"Vale ON",
+pl:7.8,
+pvp:1.6,
+dy:9.4,
+roe:18,
+preco:58.90,
+justo:68.30
+},
+
+BBAS3:{
+nome:"Banco do Brasil",
+pl:4.3,
+pvp:0.9,
+dy:10.8,
+roe:21,
+preco:27.40,
+justo:35.90
+}
+
+};
+
+function analisar(){
+
+const ticker =
+document.getElementById("ticker")
+.value
+.toUpperCase();
+
+const acao = acoes[ticker];
+
+if(!acao){
+document.getElementById("resultado").innerHTML=
+`
+<div class="card">
+<h2>Ação não encontrada</h2>
+</div>
+`;
+return;
+}
+
+let nota = 0;
+
+if(acao.pl < 15) nota++;
+if(acao.pvp < 1.5) nota++;
+if(acao.dy > 5) nota++;
+if(acao.roe > 15) nota++;
+
+nota = (nota/4*10).toFixed(1);
+
+document.getElementById("resultado").innerHTML=
+`
+<div class="card">
+
+<h2>${acao.nome}</h2>
+
+<div class="nota">${nota}/10 ⭐</div>
+
+<div class="info">
+
+<div class="box">
+<b>P/L</b><br>${acao.pl}
+</div>
+
+<div class="box">
+<b>P/VP</b><br>${acao.pvp}
+</div>
+
+<div class="box">
+<b>DY</b><br>${acao.dy}%
+</div>
+
+<div class="box">
+<b>ROE</b><br>${acao.roe}%
+</div>
+
+<div class="box">
+<b>Preço Atual</b><br>R$ ${acao.preco}
+</div>
+
+<div class="box">
+<b>Preço Justo</b><br>R$ ${acao.justo}
+</div>
+
+</div>
+
+<div class="lista">
+
+<h3 class="good">✅ Pontos positivos</h3>
+<ul>
+${acao.pl < 15 ? "<li>P/L saudável</li>" : ""}
+${acao.pvp < 1.5 ? "<li>P/VP atrativo</li>" : ""}
+${acao.dy > 5 ? "<li>Dividend Yield elevado</li>" : ""}
+${acao.roe > 15 ? "<li>ROE forte</li>" : ""}
+</ul>
+
+<h3 class="bad" style="margin-top:20px">
+❌ Pontos negativos
+</h3>
+
+<ul>
+${acao.pl >= 15 ? "<li>P/L elevado</li>" : ""}
+${acao.pvp >= 1.5 ? "<li>P/VP elevado</li>" : ""}
+${acao.dy <= 5 ? "<li>Dividend Yield baixo</li>" : ""}
+${acao.roe <= 15 ? "<li>ROE baixo</li>" : ""}
+</ul>
+
+</div>
+
+</div>
+`;
+}
+
+</script>
+
 </body>
 </html>
