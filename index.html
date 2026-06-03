@@ -12,118 +12,631 @@
       --surface2: #1a2235;
       --border: #1f2d45;
       --green: #00e5a0;
-      --green-dim: rgba(0,229,160,0.12);
+      --green-dim: rgba(0,229,160,0.10);
       --red: #ff4e6a;
       --yellow: #f5c842;
-      --blue: #3b82f6;
       --text: #e2e8f0;
       --muted: #64748b;
     }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: var(--bg); color: var(--text); font-family: 'IBM Plex Mono', monospace; overflow-x: hidden; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      overflow-x: hidden;
+    }
+
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background-image: linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+      background-image:
+        linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
       background-size: 40px 40px;
       pointer-events: none;
       z-index: 0;
     }
+
+    /* ── HEADER ── */
     header {
-      position: sticky; top: 0; z-index: 10;
+      position: sticky;
+      top: 0;
+      z-index: 100;
       border-bottom: 1px solid var(--border);
       padding: 0 2rem;
-      background: rgba(10,14,23,0.92);
-      backdrop-filter: blur(12px);
-      display: flex; align-items: center; justify-content: space-between;
-      height: 64px;
+      background: rgba(10,14,23,0.95);
+      backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
     }
-    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--green); letter-spacing: -0.03em; }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      color: var(--green);
+      letter-spacing: -0.03em;
+    }
+
     .logo span { color: var(--text); }
-    nav a { color: var(--muted); text-decoration: none; font-size: 0.78rem; margin-left: 1.5rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+
+    nav { display: flex; gap: 0; }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.72rem;
+      margin-left: 1.5rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
     nav a:hover { color: var(--green); }
-    .hero { position: relative; z-index: 1; padding: 6rem 2rem 4rem; max-width: 900px; margin: 0 auto; text-align: center; }
-    .hero-badge { display: inline-block; background: var(--green-dim); border: 1px solid rgba(0,229,160,0.3); color: var(--green); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; padding: 0.3rem 0.9rem; border-radius: 999px; margin-bottom: 1.5rem; }
-    .hero h1 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(2.2rem, 6vw, 4rem); line-height: 1.1; letter-spacing: -0.04em; margin-bottom: 1rem; }
-    .hero h1 em { font-style: normal; color: var(--green); }
-    .hero p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; max-width: 600px; margin: 0 auto 2.5rem; }
-    .hero-cta { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--green); color: #000; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; padding: 0.75rem 1.8rem; border-radius: 6px; text-decoration: none; transition: opacity 0.2s, transform 0.2s; }
-    .hero-cta:hover { opacity: 0.85; transform: translateY(-2px); }
-    section { position: relative; z-index: 1; max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
-    .section-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green); margin-bottom: 0.5rem; }
-    .section-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem; letter-spacing: -0.03em; margin-bottom: 2.5rem; }
-    .criteria-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-    .criterion { background: var(--surface); padding: 1.5rem; transition: background 0.2s; }
-    .criterion:hover { background: var(--surface2); }
-    .criterion-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 2rem; color: var(--green); opacity: 0.3; line-height: 1; margin-bottom: 0.5rem; }
-    .criterion-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.4rem; color: var(--text); }
-    .criterion-formula { font-size: 0.85rem; color: var(--green); background: var(--green-dim); display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; margin-bottom: 0.6rem; }
-    .criterion-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
-    .tag-pass { display: inline-block; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.15rem 0.5rem; border-radius: 3px; margin-top: 0.5rem; }
-    .tag-pass.green { background: rgba(0,229,160,0.15); color: var(--green); }
-    .tag-pass.red { background: rgba(255,78,106,0.15); color: var(--red); }
-    .tag-pass.yellow { background: rgba(245,200,66,0.15); color: var(--yellow); }
-    .score-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
-    @media (max-width: 600px) { .score-box { grid-template-columns: 1fr; } }
-    .score-formula { font-size: 1.05rem; line-height: 2.2; color: var(--text); }
-    .score-formula span { color: var(--green); font-weight: 600; }
-    .score-gauge { text-align: center; }
-    .gauge-ring { width: 140px; height: 140px; margin: 0 auto 1rem; border-radius: 50%; background: conic-gradient(var(--green) 0deg, var(--green) 230deg, var(--border) 230deg); display: flex; align-items: center; justify-content: center; position: relative; }
-    .gauge-ring::before { content: ''; position: absolute; inset: 16px; border-radius: 50%; background: var(--surface); }
-    .gauge-value { position: relative; z-index: 1; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.8rem; color: var(--green); }
-    .gauge-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
-    .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-    @media (max-width: 640px) { .calc-grid { grid-template-columns: 1fr; } }
-    .calc-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
-    .calc-panel h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; }
-    .field { margin-bottom: 1rem; }
-    .field label { display: block; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.35rem; }
-    .field input { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 0.55rem 0.8rem; color: var(--text); font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
-    .field input:focus { border-color: var(--green); }
-    .btn { width: 100%; background: var(--green); color: #000; border: none; border-radius: 6px; padding: 0.7rem; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: opacity 0.2s; margin-top: 0.5rem; }
-    .btn:hover { opacity: 0.85; }
-    .result-box { margin-top: 1rem; background: var(--green-dim); border: 1px solid rgba(0,229,160,0.3); border-radius: 8px; padding: 1rem; display: none; }
-    .result-box.show { display: block; }
-    .result-row { display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.4rem; color: var(--muted); }
-    .result-row span:last-child { color: var(--green); font-weight: 600; }
-    .result-verdict { margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid rgba(0,229,160,0.2); font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; text-align: center; }
-    .result-verdict.ok { color: var(--green); }
-    .result-verdict.warn { color: var(--yellow); }
-    .result-verdict.bad { color: var(--red); }
-    .i10-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-top: 1rem; }
-    .i10-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem; text-decoration: none; color: var(--text); display: block; transition: border-color 0.2s, transform 0.2s; }
-    .i10-card:hover { border-color: var(--green); transform: translateY(-3px); }
-    .i10-card .i-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
-    .i10-card .i-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.3rem; }
-    .i10-card .i-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.5; }
-    .i10-card .i-link { font-size: 0.7rem; color: var(--green); margin-top: 0.6rem; display: block; letter-spacing: 0.05em; }
-    .disclaimer { background: rgba(245,200,66,0.06); border: 1px solid rgba(245,200,66,0.2); border-radius: 8px; padding: 1rem 1.2rem; font-size: 0.75rem; color: var(--yellow); line-height: 1.6; margin-top: 1rem; }
-    footer { position: relative; z-index: 1; border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.75rem; color: var(--muted); }
-    footer a { color: var(--green); text-decoration: none; }
-    .ticker-bar { position: relative; z-index: 1; background: var(--surface); border-bottom: 1px solid var(--border); padding: 0.4rem 0; overflow: hidden; white-space: nowrap; }
-    .ticker-inner { display: inline-block; animation: ticker 30s linear infinite; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.05em; }
-    .ticker-inner span { margin: 0 2rem; }
+
+    /* ── TICKER ── */
+    .ticker-bar {
+      position: relative;
+      z-index: 1;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0.45rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker 35s linear infinite;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .ticker-inner span { margin: 0 2.5rem; }
     .ticker-inner .up { color: var(--green); }
-    .ticker-inner .down { color: var(--red); }
-    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    .divider { border: none; border-top: 1px solid var(--border); }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    .criterion { animation: fadeUp 0.5s ease both; }
-    .criterion:nth-child(1) { animation-delay: 0.05s; }
-    .criterion:nth-child(2) { animation-delay: 0.1s; }
-    .criterion:nth-child(3) { animation-delay: 0.15s; }
-    .criterion:nth-child(4) { animation-delay: 0.2s; }
-    .criterion:nth-child(5) { animation-delay: 0.25s; }
-    .criterion:nth-child(6) { animation-delay: 0.3s; }
-    .criterion:nth-child(7) { animation-delay: 0.35s; }
-    .criterion:nth-child(8) { animation-delay: 0.4s; }
+    .ticker-inner .dn { color: var(--red); }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem 4rem;
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--green-dim);
+      border: 1px solid rgba(0,229,160,0.3);
+      color: var(--green);
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--green);
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.75;
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green);
+      color: #000;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 0.75rem 1.8rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .hero-cta:hover {
+      opacity: 0.85;
+      transform: translateY(-2px);
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 0.4rem;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.75rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 2rem;
+    }
+
+    /* ── CRITERIA GRID ── */
+    .criteria-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .criterion {
+      background: var(--surface);
+      padding: 1.4rem;
+      transition: background 0.2s;
+    }
+
+    .criterion:hover { background: var(--surface2); }
+
+    .criterion-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 2rem;
+      color: var(--green);
+      opacity: 0.25;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .criterion-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin-bottom: 0.35rem;
+      color: var(--text);
+    }
+
+    .criterion-formula {
+      font-size: 0.82rem;
+      color: var(--green);
+      background: var(--green-dim);
+      display: inline-block;
+      padding: 0.18rem 0.55rem;
+      border-radius: 4px;
+      margin-bottom: 0.55rem;
+    }
+
+    .criterion-desc {
+      font-size: 0.76rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.5rem;
+      border-radius: 3px;
+      margin-top: 0.6rem;
+    }
+
+    .tag-green { background: rgba(0,229,160,0.12); color: var(--green); }
+    .tag-red   { background: rgba(255,78,106,0.12); color: var(--red); }
+
+    /* ── SCORE BOX ── */
+    .score-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    @media (max-width: 600px) {
+      .score-box { grid-template-columns: 1fr; }
+    }
+
+    .score-formula {
+      font-size: 1rem;
+      line-height: 2.4;
+      color: var(--text);
+    }
+
+    .score-formula strong { color: var(--green); }
+
+    .score-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .score-table th {
+      text-align: left;
+      color: var(--muted);
+      font-weight: 400;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+    }
+
+    .score-table td {
+      padding: 0.35rem 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .score-table td:nth-child(2) { color: var(--green); text-align: center; }
+    .score-table .ok  { color: var(--green); text-align: right; }
+    .score-table .bad { color: var(--red);   text-align: right; }
+
+    .score-visual {
+      text-align: center;
+    }
+
+    .gauge {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: conic-gradient(var(--green) 0deg 230deg, var(--border) 230deg 360deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.8rem;
+      position: relative;
+    }
+
+    .gauge::before {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      border-radius: 50%;
+      background: var(--surface);
+    }
+
+    .gauge-val {
+      position: relative;
+      z-index: 1;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.9rem;
+      color: var(--green);
+    }
+
+    .gauge-lbl {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── CALCULADORAS ── */
+    .calc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 680px) {
+      .calc-grid { grid-template-columns: 1fr; }
+      nav a { display: none; }
+    }
+
+    .calc-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .calc-panel h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text);
+    }
+
+    .field { margin-bottom: 0.9rem; }
+
+    .field label {
+      display: block;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.55rem 0.8rem;
+      color: var(--text);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+
+    .field input:focus,
+    .field select:focus { border-color: var(--green); }
+
+    .btn {
+      width: 100%;
+      background: var(--green);
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      padding: 0.7rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      margin-top: 0.4rem;
+    }
+
+    .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    .result-box {
+      margin-top: 1rem;
+      background: var(--green-dim);
+      border: 1px solid rgba(0,229,160,0.25);
+      border-radius: 8px;
+      padding: 1rem 1.1rem;
+      display: none;
+    }
+
+    .result-box.show { display: block; }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      margin-bottom: 0.45rem;
+      color: var(--muted);
+    }
+
+    .result-row span:last-child {
+      color: var(--green);
+      font-weight: 600;
+    }
+
+    .result-verdict {
+      margin-top: 0.8rem;
+      padding-top: 0.8rem;
+      border-top: 1px solid rgba(0,229,160,0.2);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-align: center;
+    }
+
+    .verdict-ok   { color: var(--green); }
+    .verdict-warn { color: var(--yellow); }
+    .verdict-bad  { color: var(--red); }
+
+    /* ── NOTA COMPLETA ── */
+    .nota-panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .nota-panel h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .check-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      padding: 0.45rem 0.7rem;
+      border-radius: 5px;
+    }
+
+    .check-item.pass { background: rgba(0,229,160,0.07); }
+    .check-item.fail { background: rgba(255,78,106,0.07); }
+
+    .check-item .icon-pass { color: var(--green); }
+    .check-item .icon-fail { color: var(--red); }
+
+    .nota-result {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      display: none;
+    }
+
+    .nota-result.show { display: block; }
+    .nota-result.aprovada { background: rgba(0,229,160,0.12); color: var(--green); border: 1px solid rgba(0,229,160,0.3); }
+    .nota-result.reprovada { background: rgba(255,78,106,0.10); color: var(--red); border: 1px solid rgba(255,78,106,0.25); }
+
+    /* ── INVESTIDOR10 ── */
+    .i10-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .i10-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.2rem;
+      text-decoration: none;
+      color: var(--text);
+      display: block;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .i10-card:hover {
+      border-color: var(--green);
+      transform: translateY(-3px);
+    }
+
+    .i10-card .i-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+
+    .i10-card .i-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .i10-card .i-desc {
+      font-size: 0.73rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .i10-card .i-link {
+      font-size: 0.68rem;
+      color: var(--green);
+      margin-top: 0.6rem;
+      display: block;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── PASSO A PASSO ── */
+    .steps { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+
+    .step {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      border: 1px solid var(--green);
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    .step-body h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.88rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .step-body p { font-size: 0.76rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── DISCLAIMER ── */
+    .disclaimer {
+      background: rgba(245,200,66,0.05);
+      border: 1px solid rgba(245,200,66,0.2);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      font-size: 0.74rem;
+      color: var(--yellow);
+      line-height: 1.65;
+      margin-top: 1.5rem;
+    }
+
+    /* ── DIVIDER ── */
+    hr.divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.74rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--green); text-decoration: none; }
+    footer p + p { margin-top: 0.4rem; }
   </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
-  <div class="logo">FKN<span>Ações</span></div>
+  <div class="logo">FKN<span> Ações</span></div>
   <nav>
     <a href="#criterios">Critérios</a>
     <a href="#nota">Nota</a>
@@ -132,272 +645,515 @@
   </nav>
 </header>
 
+<!-- TICKER -->
 <div class="ticker-bar">
   <div class="ticker-inner">
-    <span>PETR4 <span class="up">▲ 2,3%</span></span>
-    <span>VALE3 <span class="down">▼ 0,8%</span></span>
-    <span>ITUB4 <span class="up">▲ 1,1%</span></span>
-    <span>BBDC4 <span class="down">▼ 0,4%</span></span>
-    <span>WEGE3 <span class="up">▲ 3,0%</span></span>
-    <span>MGLU3 <span class="down">▼ 1,5%</span></span>
-    <span>ABEV3 <span class="up">▲ 0,6%</span></span>
-    <span>EGIE3 <span class="up">▲ 1,8%</span></span>
-    <span>TAEE11 <span class="up">▲ 0,9%</span></span>
-    <span>HGLG11 <span class="down">▼ 0,2%</span></span>
-    <span>PETR4 <span class="up">▲ 2,3%</span></span>
-    <span>VALE3 <span class="down">▼ 0,8%</span></span>
-    <span>ITUB4 <span class="up">▲ 1,1%</span></span>
-    <span>BBDC4 <span class="down">▼ 0,4%</span></span>
-    <span>WEGE3 <span class="up">▲ 3,0%</span></span>
-    <span>MGLU3 <span class="down">▼ 1,5%</span></span>
-    <span>ABEV3 <span class="up">▲ 0,6%</span></span>
-    <span>EGIE3 <span class="up">▲ 1,8%</span></span>
-    <span>TAEE11 <span class="up">▲ 0,9%</span></span>
-    <span>HGLG11 <span class="down">▼ 0,2%</span></span>
+    <span>PETR4 <span class="up">▲ +1,23%</span></span>
+    <span>VALE3 <span class="dn">▼ -0,54%</span></span>
+    <span>ITUB4 <span class="up">▲ +0,87%</span></span>
+    <span>WEGE3 <span class="up">▲ +2,10%</span></span>
+    <span>BBAS3 <span class="up">▲ +0,45%</span></span>
+    <span>RENT3 <span class="dn">▼ -1,12%</span></span>
+    <span>LREN3 <span class="up">▲ +0,33%</span></span>
+    <span>MGLU3 <span class="dn">▼ -2,05%</span></span>
+    <span>ABEV3 <span class="up">▲ +0,98%</span></span>
+    <span>B3SA3 <span class="dn">▼ -0,22%</span></span>
+    <span>TAEE11 <span class="up">▲ +1,05%</span></span>
+    <span>EGIE3 <span class="up">▲ +0,61%</span></span>
+    <!-- duplicate for seamless loop -->
+    <span>PETR4 <span class="up">▲ +1,23%</span></span>
+    <span>VALE3 <span class="dn">▼ -0,54%</span></span>
+    <span>ITUB4 <span class="up">▲ +0,87%</span></span>
+    <span>WEGE3 <span class="up">▲ +2,10%</span></span>
+    <span>BBAS3 <span class="up">▲ +0,45%</span></span>
+    <span>RENT3 <span class="dn">▼ -1,12%</span></span>
+    <span>LREN3 <span class="up">▲ +0,33%</span></span>
+    <span>MGLU3 <span class="dn">▼ -2,05%</span></span>
+    <span>ABEV3 <span class="up">▲ +0,98%</span></span>
+    <span>B3SA3 <span class="dn">▼ -0,22%</span></span>
+    <span>TAEE11 <span class="up">▲ +1,05%</span></span>
+    <span>EGIE3 <span class="up">▲ +0,61%</span></span>
   </div>
 </div>
 
+<!-- HERO -->
 <div class="hero">
-  <div class="hero-badge">Método de Análise Fundamentalista</div>
-  <h1>Compre ações como<br/><em>um profissional</em></h1>
-  <p>O Método FKN reúne 8 critérios objetivos para filtrar ações baratas, sólidas e lucrativas na Bolsa brasileira. Use a calculadora abaixo e confira os dados no Investidor10.</p>
-  <a href="#criterios" class="hero-cta">Ver os 8 critérios →</a>
+  <div class="hero-badge">📊 Análise Fundamentalista</div>
+  <h1>Método <em>FKN</em><br/>de Compra<br/>de Ações</h1>
+  <p>8 critérios objetivos para selecionar ações de qualidade na Bolsa brasileira. Simples, rigoroso e replicável por qualquer investidor.</p>
+  <a href="#criterios" class="hero-cta">Ver os 8 Critérios →</a>
 </div>
 
+<!-- CRITÉRIOS -->
 <section id="criterios">
-  <div class="section-label">// Método FKN</div>
-  <div class="section-title">Os 8 Critérios de Compra</div>
+  <div class="section-label">// Os filtros</div>
+  <div class="section-title">Os 8 Critérios FKN</div>
+
   <div class="criteria-grid">
+
     <div class="criterion">
       <div class="criterion-num">01</div>
-      <div class="criterion-title">P/L &lt; 15</div>
-      <div class="criterion-formula">Preço / Lucro &lt; 15</div>
-      <div class="criterion-desc">A ação está sendo negociada a um preço razoável em relação ao lucro gerado. Evita pagar caro por crescimento futuro incerto.</div>
-      <span class="tag-pass green">✔ Filtro obrigatório</span>
+      <div class="criterion-title">Preço / Lucro (P/L)</div>
+      <div class="criterion-formula">P/L &lt; 15</div>
+      <div class="criterion-desc">Indica quantos anos o investidor levaria para recuperar o capital pelo lucro. Abaixo de 15 sinaliza que a ação não está cara.</div>
+      <span class="tag tag-green">✓ Valuation</span>
     </div>
+
     <div class="criterion">
       <div class="criterion-num">02</div>
-      <div class="criterion-title">P/VP &lt; 1,5</div>
-      <div class="criterion-formula">Preço / Valor Patrimonial &lt; 1,5</div>
-      <div class="criterion-desc">Você está pagando no máximo 1,5x pelo patrimônio líquido da empresa. Indica que a ação não está inflada em relação aos seus ativos reais.</div>
-      <span class="tag-pass green">✔ Filtro obrigatório</span>
+      <div class="criterion-title">Preço / Valor Patrimonial (P/VP)</div>
+      <div class="criterion-formula">P/VP &lt; 1,5</div>
+      <div class="criterion-desc">Compara o preço de mercado com o valor contábil. Abaixo de 1,5 mostra que você não está pagando um ágio excessivo.</div>
+      <span class="tag tag-green">✓ Valuation</span>
     </div>
+
     <div class="criterion">
       <div class="criterion-num">03</div>
-      <div class="criterion-title">DY &gt; 5%</div>
-      <div class="criterion-formula">Dividend Yield &gt; 5%</div>
-      <div class="criterion-desc">A empresa distribui bons dividendos. Um DY acima de 5% indica retorno consistente ao acionista e maturidade financeira.</div>
-      <span class="tag-pass green">✔ Filtro obrigatório</span>
+      <div class="criterion-title">Dividend Yield (DY)</div>
+      <div class="criterion-formula">DY &gt; 5%</div>
+      <div class="criterion-desc">Retorno em dividendos sobre o preço pago. Acima de 5% demonstra que a empresa remunera bem seus acionistas.</div>
+      <span class="tag tag-green">✓ Renda</span>
     </div>
+
     <div class="criterion">
       <div class="criterion-num">04</div>
-      <div class="criterion-title">Gráfico em queda?</div>
-      <div class="criterion-formula">Análise Técnica</div>
-      <div class="criterion-desc">Verifique se o gráfico está em tendência de queda. Se estiver, é um sinal de alerta — aguarde o fundo antes de comprar.</div>
-      <span class="tag-pass yellow">⚠ Verificação manual</span>
+      <div class="criterion-title">Análise Gráfica</div>
+      <div class="criterion-formula">Gráfico não em queda</div>
+      <div class="criterion-desc">Mesmo na análise fundamentalista, evitar ações com tendência gráfica de queda reduz o risco de comprar em momento ruim.</div>
+      <span class="tag tag-red">✗ Eliminar se em queda</span>
     </div>
+
     <div class="criterion">
       <div class="criterion-num">05</div>
-      <div class="criterion-title">Preço Justo (Graham)</div>
+      <div class="criterion-title">Preço Justo de Graham</div>
       <div class="criterion-formula">√(22,5 × VPA × LPA)</div>
-      <div class="criterion-desc">Fórmula de Benjamin Graham adaptada. O preço de mercado deve estar abaixo do preço justo calculado para indicar margem de segurança.</div>
-      <span class="tag-pass green">✔ Filtro obrigatório</span>
+      <div class="criterion-desc">Fórmula clássica de Benjamin Graham. O preço atual deve estar abaixo do valor calculado para garantir margem de segurança.</div>
+      <span class="tag tag-green">✓ Margem de Segurança</span>
     </div>
+
     <div class="criterion">
       <div class="criterion-num">06</div>
-      <div class="criterion-title">Sem prejuízo recente</div>
-      <div class="criterion-formula">Últimos 3 ou 5 anos</div>
-      <div class="criterion-desc">A empresa não pode ter registrado prejuízo nos últimos 3 a 5 anos. Consistência de lucros é sinal de gestão sólida e negócio sustentável.</div>
-      <span class="tag-pass red">✘ Elimina a ação</span>
+      <div class="criterion-title">Histórico de Resultados</div>
+      <div class="criterion-formula">Sem prejuízo em 3–5 anos</div>
+      <div class="criterion-desc">Empresas que deram prejuízo recente demonstram instabilidade. O critério exige consistência de lucros no médio prazo.</div>
+      <span class="tag tag-red">✗ Eliminar se houve prejuízo</span>
     </div>
+
     <div class="criterion">
       <div class="criterion-num">07</div>
-      <div class="criterion-title">Preço Teto (DY médio)</div>
-      <div class="criterion-formula">(DY1 + DY2 + DY3) / 3 ÷ 0,06</div>
-      <div class="criterion-desc">Calcula o preço máximo a pagar com base na média de dividendos dos últimos 3 anos, usando taxa de retorno esperada de 6% a.a.</div>
-      <span class="tag-pass green">✔ Filtro obrigatório</span>
+      <div class="criterion-title">Preço Teto por Dividendos</div>
+      <div class="criterion-formula">(DY1+DY2+DY3)/3 ÷ 0,06</div>
+      <div class="criterion-desc">Calcula o preço máximo a pagar com base na média dos dividendos dos últimos 3 anos, assumindo retorno mínimo de 6% ao ano.</div>
+      <span class="tag tag-green">✓ Preço de Entrada</span>
     </div>
+
     <div class="criterion">
       <div class="criterion-num">08</div>
-      <div class="criterion-title">ROE &gt; 15%</div>
-      <div class="criterion-formula">Retorno sobre Patrimônio &gt; 15%</div>
-      <div class="criterion-desc">A empresa gera mais de 15% de retorno sobre o capital próprio. Indica eficiência e capacidade de criar valor para o acionista.</div>
-      <span class="tag-pass green">✔ Filtro obrigatório</span>
+      <div class="criterion-title">Retorno sobre Patrimônio (ROE)</div>
+      <div class="criterion-formula">ROE &gt; 15%</div>
+      <div class="criterion-desc">Mede a eficiência da empresa em gerar lucro com o patrimônio dos acionistas. Acima de 15% indica alta qualidade de gestão.</div>
+      <span class="tag tag-green">✓ Qualidade</span>
     </div>
+
   </div>
 </section>
 
 <hr class="divider"/>
 
+<!-- NOTA -->
 <section id="nota">
-  <div class="section-label">// Pontuação FKN</div>
+  <div class="section-label">// Pontuação</div>
   <div class="section-title">Cálculo da Nota da Ação</div>
+
   <div class="score-box">
-    <div class="score-formula">
-      Para cada critério aprovado:<br/>
-      <span>Nº de ✔ × 1,25 = Nota Final</span><br/><br/>
-      Aprovação mínima:<br/>
-      <span>Nota ≥ 8,0</span> para considerar compra<br/><br/>
-      Máximo possível:<br/>
-      <span>8 critérios × 1,25 = 10,0</span>
+    <div>
+      <div class="score-formula">
+        <strong>Nota</strong> = Nº de ✓ × 1,25<br/>
+        <strong>Mínimo</strong> para aprovação: <strong>8,0</strong><br/>
+        <strong>Máximo</strong> possível: <strong>10,0</strong>
+      </div>
+      <table class="score-table">
+        <thead>
+          <tr>
+            <th>Critérios ✓</th>
+            <th>Nota</th>
+            <th style="text-align:right">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>8 de 8</td><td>10,0</td><td class="ok">✔ Aprovada</td></tr>
+          <tr><td>7 de 8</td><td>8,75</td><td class="ok">✔ Aprovada</td></tr>
+          <tr><td>6 de 8</td><td>7,5</td><td class="bad">✘ Reprovada</td></tr>
+          <tr><td>5 de 8</td><td>6,25</td><td class="bad">✘ Reprovada</td></tr>
+          <tr><td>4 de 8</td><td>5,0</td><td class="bad">✘ Reprovada</td></tr>
+        </tbody>
+      </table>
     </div>
-    <div class="score-gauge">
-      <div class="gauge-ring"><div class="gauge-value">8,0</div></div>
-      <div class="gauge-label">Nota mínima para comprar</div>
+    <div class="score-visual">
+      <div class="gauge">
+        <div class="gauge-val">8,0</div>
+      </div>
+      <div class="gauge-lbl">Nota mínima para aprovação</div>
+      <p style="font-size:0.72rem; color:var(--muted); margin-top:0.8rem; line-height:1.6;">Precisa passar em pelo menos<br/><strong style="color:var(--green)">7 dos 8 critérios</strong> para ser aprovada</p>
     </div>
   </div>
 </section>
 
 <hr class="divider"/>
 
+<!-- CALCULADORA -->
 <section id="calculadora">
-  <div class="section-label">// Ferramenta</div>
-  <div class="section-title">Calculadora FKN</div>
+  <div class="section-label">// Ferramentas</div>
+  <div class="section-title">Calculadoras FKN</div>
+
   <div class="calc-grid">
+
+    <!-- Graham -->
     <div class="calc-panel">
-      <h3><span class="icon">📐</span> Preço Justo (Graham)</h3>
+      <h3>📐 Preço Justo de Graham</h3>
       <div class="field">
         <label>VPA — Valor Patrimonial por Ação (R$)</label>
-        <input id="vpa" type="number" placeholder="Ex: 12,50" step="0.01"/>
+        <input type="number" id="vpa" placeholder="ex: 25,40" step="0.01" min="0"/>
       </div>
       <div class="field">
         <label>LPA — Lucro por Ação (R$)</label>
-        <input id="lpa" type="number" placeholder="Ex: 3,20" step="0.01"/>
+        <input type="number" id="lpa" placeholder="ex: 3,20" step="0.01" min="0"/>
       </div>
       <div class="field">
-        <label>Preço atual da ação (R$)</label>
-        <input id="preco-graham" type="number" placeholder="Ex: 18,00" step="0.01"/>
+        <label>Preço Atual da Ação (R$)</label>
+        <input type="number" id="preco-graham" placeholder="ex: 38,50" step="0.01" min="0"/>
       </div>
       <button class="btn" onclick="calcGraham()">Calcular Preço Justo</button>
       <div class="result-box" id="res-graham">
-        <div class="result-row"><span>Preço Justo Graham</span><span id="rg-justo">—</span></div>
+        <div class="result-row"><span>Preço Justo (Graham)</span><span id="rg-justo">—</span></div>
         <div class="result-row"><span>Margem de Segurança</span><span id="rg-margem">—</span></div>
-        <div class="result-verdict" id="rg-verdict">—</div>
+        <div class="result-verdict" id="rg-verdict"></div>
       </div>
     </div>
+
+    <!-- Preço Teto -->
     <div class="calc-panel">
-      <h3><span class="icon">💰</span> Preço Teto por Dividendos</h3>
+      <h3>🎯 Preço Teto por Dividendos</h3>
       <div class="field">
-        <label>Dividendo Ano 1 (R$)</label>
-        <input id="dy1" type="number" placeholder="Ex: 1,20" step="0.01"/>
+        <label>Dividendos pagos — Ano 1 (R$)</label>
+        <input type="number" id="dy1" placeholder="ex: 2,10" step="0.01" min="0"/>
       </div>
       <div class="field">
-        <label>Dividendo Ano 2 (R$)</label>
-        <input id="dy2" type="number" placeholder="Ex: 1,05" step="0.01"/>
+        <label>Dividendos pagos — Ano 2 (R$)</label>
+        <input type="number" id="dy2" placeholder="ex: 1,95" step="0.01" min="0"/>
       </div>
       <div class="field">
-        <label>Dividendo Ano 3 (R$)</label>
-        <input id="dy3" type="number" placeholder="Ex: 0,90" step="0.01"/>
+        <label>Dividendos pagos — Ano 3 (R$)</label>
+        <input type="number" id="dy3" placeholder="ex: 2,30" step="0.01" min="0"/>
+      </div>
+      <div class="field">
+        <label>Preço Atual da Ação (R$)</label>
+        <input type="number" id="preco-teto" placeholder="ex: 38,50" step="0.01" min="0"/>
       </div>
       <button class="btn" onclick="calcTeto()">Calcular Preço Teto</button>
       <div class="result-box" id="res-teto">
-        <div class="result-row"><span>Dividendo Médio</span><span id="rt-media">—</span></div>
+        <div class="result-row"><span>Dividendo médio (3 anos)</span><span id="rt-media">—</span></div>
         <div class="result-row"><span>Preço Teto (6% a.a.)</span><span id="rt-teto">—</span></div>
-        <div class="result-verdict" id="rt-verdict">—</div>
+        <div class="result-verdict" id="rt-verdict"></div>
       </div>
     </div>
+
+  </div>
+
+  <!-- Nota Completa -->
+  <div class="nota-panel">
+    <h3>🧮 Calculadora de Nota Completa (8 Critérios)</h3>
+    <div class="calc-grid">
+      <div>
+        <div class="field">
+          <label>P/L — Preço / Lucro</label>
+          <input type="number" id="n-pl" placeholder="ex: 12,5" step="0.01" min="0"/>
+        </div>
+        <div class="field">
+          <label>P/VP — Preço / Valor Patrimonial</label>
+          <input type="number" id="n-pvp" placeholder="ex: 1,2" step="0.01" min="0"/>
+        </div>
+        <div class="field">
+          <label>DY — Dividend Yield (%)</label>
+          <input type="number" id="n-dy" placeholder="ex: 6,8" step="0.01" min="0"/>
+        </div>
+        <div class="field">
+          <label>ROE (%)</label>
+          <input type="number" id="n-roe" placeholder="ex: 18" step="0.01" min="0"/>
+        </div>
+      </div>
+      <div>
+        <div class="field">
+          <label>VPA (R$)</label>
+          <input type="number" id="n-vpa" placeholder="ex: 25,40" step="0.01" min="0"/>
+        </div>
+        <div class="field">
+          <label>LPA (R$)</label>
+          <input type="number" id="n-lpa" placeholder="ex: 3,20" step="0.01" min="0"/>
+        </div>
+        <div class="field">
+          <label>Preço Atual (R$)</label>
+          <input type="number" id="n-preco" placeholder="ex: 38,50" step="0.01" min="0"/>
+        </div>
+        <div class="field">
+          <label>Preço Teto calculado (R$)</label>
+          <input type="number" id="n-teto" placeholder="ex: 45,00" step="0.01" min="0"/>
+        </div>
+        <div class="field">
+          <label>Gráfico em tendência de queda?</label>
+          <select id="n-grafico">
+            <option value="nao">Não — lateral ou em alta</option>
+            <option value="sim">Sim — em queda</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Teve prejuízo nos últimos 3–5 anos?</label>
+          <select id="n-prejuizo">
+            <option value="nao">Não</option>
+            <option value="sim">Sim</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <button class="btn" onclick="calcNota()">Calcular Nota FKN</button>
+
+    <ul class="check-list" id="check-list" style="margin-top:1rem;"></ul>
+    <div class="nota-result" id="nota-result"></div>
   </div>
 </section>
 
 <hr class="divider"/>
 
+<!-- INVESTIDOR10 -->
 <section id="investidor10">
-  <div class="section-label">// Onde buscar os dados</div>
-  <div class="section-title">Use o Investidor10</div>
-  <p style="color:var(--muted); font-size:0.85rem; margin-bottom:1.5rem; line-height:1.7;">
-    Todos os indicadores necessários para o Método FKN estão disponíveis gratuitamente no <strong style="color:var(--text)">Investidor10</strong>. Veja abaixo onde encontrar cada dado:
+  <div class="section-label">// Fonte de dados</div>
+  <div class="section-title">Como usar o Investidor10</div>
+
+  <p style="color:var(--muted); font-size:0.82rem; line-height:1.75; margin-bottom:1.5rem;">
+    Todos os indicadores necessários para o Método FKN estão disponíveis <strong style="color:var(--text)">gratuitamente</strong> no
+    <a href="https://investidor10.com.br" target="_blank" rel="noopener" style="color:var(--green)">Investidor10</a>.
+    Veja o passo a passo abaixo:
   </p>
-  <div class="i10-grid">
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Acesse o site e busque a ação</h4>
+        <p>Entre em <strong style="color:var(--green)">investidor10.com.br</strong> e pesquise o ticker da ação (ex: WEGE3, TAEE11) na barra de busca no topo.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Colete P/L, P/VP, DY e ROE</h4>
+        <p>Na página da ação, clique em <em>Indicadores Fundamentalistas</em>. Você encontrará P/L, P/VP, Dividend Yield, VPA, LPA e ROE diretamente.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Verifique o histórico de dividendos</h4>
+        <p>Acesse a aba <em>Proventos</em> para ver os dividendos pagos nos últimos 3 anos em reais por ação (para o cálculo do Preço Teto).</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Confirme o histórico de lucros</h4>
+        <p>Em <em>Resultados → Lucro Líquido</em>, verifique se a empresa teve lucro nos últimos 3 a 5 anos. Prejuízo em qualquer ano reprova o critério 6.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h4>Analise o gráfico de cotação</h4>
+        <p>Veja o gráfico de preço nos últimos 6–12 meses. Se a tendência for claramente de queda, a ação reprova o critério 4.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h4>Insira os dados na calculadora acima</h4>
+        <p>Com todos os dados em mãos, use a <a href="#calculadora" style="color:var(--green)">Calculadora de Nota Completa</a> acima para obter a nota final da ação.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="i10-grid" style="margin-top:2.5rem;">
     <a class="i10-card" href="https://investidor10.com.br/acoes/" target="_blank" rel="noopener">
       <div class="i-icon">🔍</div>
       <div class="i-title">Busca de Ações</div>
       <div class="i-desc">Pesquise qualquer ação brasileira e acesse o painel completo com todos os indicadores fundamentalistas.</div>
       <span class="i-link">investidor10.com.br/acoes →</span>
     </a>
-    <a class="i10-card" href="https://investidor10.com.br/acoes/?ordenacao=P_L&tipo=1&ordem=ASC" target="_blank" rel="noopener">
-      <div class="i-icon">📊</div>
-      <div class="i-title">P/L e P/VP</div>
-      <div class="i-desc">Filtre ações por P/L menor que 15 e P/VP menor que 1,5 diretamente na tela de comparação de indicadores.</div>
-      <span class="i-link">Filtrar por P/L →</span>
+    <a class="i10-card" href="https://investidor10.com.br/acoes/screener/" target="_blank" rel="noopener">
+      <div class="i-icon">🎯</div>
+      <div class="i-title">Screener Avançado</div>
+      <div class="i-desc">Aplique múltiplos filtros ao mesmo tempo: P/L, P/VP, DY e ROE — todos os critérios FKN de uma vez só.</div>
+      <span class="i-link">Abrir Screener →</span>
     </a>
     <a class="i10-card" href="https://investidor10.com.br/dividendos/" target="_blank" rel="noopener">
       <div class="i-icon">💸</div>
-      <div class="i-title">Dividendos (DY)</div>
-      <div class="i-desc">Veja o histórico completo de dividendos por ação, dividend yield dos últimos anos e calendário de pagamentos.</div>
+      <div class="i-title">Histórico de Dividendos</div>
+      <div class="i-desc">Veja o histórico completo de proventos por ação, DY histórico e calendário de pagamentos futuros.</div>
       <span class="i-link">investidor10.com.br/dividendos →</span>
-    </a>
-    <a class="i10-card" href="https://investidor10.com.br/acoes/?ordenacao=ROE&tipo=1&ordem=DESC" target="_blank" rel="noopener">
-      <div class="i-icon">📈</div>
-      <div class="i-title">ROE &gt; 15%</div>
-      <div class="i-desc">Encontre ações com alto retorno sobre patrimônio (ROE). Filtre por ROE acima de 15% para garantir eficiência.</div>
-      <span class="i-link">Filtrar por ROE →</span>
     </a>
     <a class="i10-card" href="https://investidor10.com.br/comparador-de-acoes/" target="_blank" rel="noopener">
       <div class="i-icon">⚖️</div>
       <div class="i-title">Comparador de Ações</div>
-      <div class="i-desc">Compare lado a lado todos os indicadores FKN de até 5 ações simultaneamente para facilitar a decisão.</div>
+      <div class="i-desc">Compare lado a lado todos os indicadores FKN de até 5 ações simultaneamente para facilitar a escolha.</div>
       <span class="i-link">Comparar ações →</span>
     </a>
-    <a class="i10-card" href="https://investidor10.com.br/acoes/screener/" target="_blank" rel="noopener">
-      <div class="i-icon">🎯</div>
-      <div class="i-title">Screener (Filtro Avançado)</div>
-      <div class="i-desc">Use o screener para aplicar múltiplos filtros ao mesmo tempo: P/L, P/VP, DY e ROE — todos os critérios FKN de uma vez.</div>
-      <span class="i-link">Abrir Screener →</span>
+    <a class="i10-card" href="https://investidor10.com.br/acoes/?ordenacao=P_L&tipo=1&ordem=ASC" target="_blank" rel="noopener">
+      <div class="i-icon">📊</div>
+      <div class="i-title">Ranking por P/L</div>
+      <div class="i-desc">Veja as ações com menor P/L do mercado, já ordenadas. Filtre as que estão abaixo de 15.</div>
+      <span class="i-link">Filtrar por P/L →</span>
+    </a>
+    <a class="i10-card" href="https://investidor10.com.br/acoes/?ordenacao=ROE&tipo=1&ordem=DESC" target="_blank" rel="noopener">
+      <div class="i-icon">📈</div>
+      <div class="i-title">Ranking por ROE</div>
+      <div class="i-desc">Encontre as ações com maior retorno sobre patrimônio. Filtre as que têm ROE acima de 15%.</div>
+      <span class="i-link">Filtrar por ROE →</span>
     </a>
   </div>
+
   <div class="disclaimer">
-    ⚠️ <strong>Aviso importante:</strong> Este site é exclusivamente educacional. As informações aqui apresentadas não constituem recomendação de compra ou venda de ativos. Investimentos em renda variável envolvem riscos e podem resultar em perdas. Consulte sempre um profissional certificado antes de investir.
+    ⚠️ <strong>Aviso importante:</strong> Este site tem caráter exclusivamente <strong>educacional</strong>.
+    As informações aqui apresentadas não constituem recomendação de compra ou venda de ativos financeiros.
+    Investimentos em renda variável envolvem riscos e podem resultar em perdas parciais ou totais do capital investido.
+    Consulte sempre um profissional certificado (CFP / CGA) antes de tomar decisões de investimento.
   </div>
 </section>
 
 <footer>
-  <p>Método FKN — Análise Fundamentalista de Ações · Dados: <a href="https://investidor10.com.br" target="_blank">Investidor10</a></p>
-  <p style="margin-top:0.5rem;">Desenvolvido com fins educacionais · Não é recomendação de investimento</p>
+  <p>Método FKN — Análise Fundamentalista de Ações &middot; Dados via <a href="https://investidor10.com.br" target="_blank" rel="noopener">Investidor10</a></p>
+  <p>Desenvolvido com fins educacionais &middot; Não constitui recomendação de investimento</p>
 </footer>
 
 <script>
+  /* ── GRAHAM ── */
   function calcGraham() {
-    const vpa = parseFloat(document.getElementById('vpa').value);
-    const lpa = parseFloat(document.getElementById('lpa').value);
+    const vpa   = parseFloat(document.getElementById('vpa').value);
+    const lpa   = parseFloat(document.getElementById('lpa').value);
     const preco = parseFloat(document.getElementById('preco-graham').value);
+
     if (isNaN(vpa) || isNaN(lpa) || isNaN(preco) || vpa <= 0 || lpa <= 0 || preco <= 0) {
-      alert('Preencha todos os campos com valores válidos.');
+      alert('Preencha todos os campos com valores positivos.');
       return;
     }
-    const justo = Math.sqrt(22.5 * vpa * lpa);
+
+    const justo  = Math.sqrt(22.5 * vpa * lpa);
     const margem = ((justo - preco) / justo * 100).toFixed(1);
-    document.getElementById('rg-justo').textContent = 'R$ ' + justo.toFixed(2);
+
+    document.getElementById('rg-justo').textContent  = 'R$ ' + justo.toFixed(2);
     document.getElementById('rg-margem').textContent = margem + '%';
-    const verdict = document.getElementById('rg-verdict');
+
+    const v = document.getElementById('rg-verdict');
     if (preco < justo * 0.9) {
-      verdict.textContent = '✔ Abaixo do preço justo — boa margem de segurança!';
-      verdict.className = 'result-verdict ok';
+      v.textContent = '✔ Abaixo do preço justo — boa margem de segurança!';
+      v.className   = 'result-verdict verdict-ok';
     } else if (preco < justo) {
-      verdict.textContent = '⚠ Próximo do preço justo — margem pequena';
-      verdict.className = 'result-verdict warn';
+      v.textContent = '⚠ Próximo do preço justo — margem pequena';
+      v.className   = 'result-verdict verdict-warn';
     } else {
-      verdict.textContent = '✘ Acima do preço justo — evite comprar agora';
-      verdict.className = 'result-verdict bad';
+      v.textContent = '✘ Acima do preço justo — evite comprar agora';
+      v.className   = 'result-verdict verdict-bad';
     }
+
     document.getElementById('res-graham').classList.add('show');
   }
 
+  /* ── PREÇO TETO ── */
   function calcTeto() {
-    const dy1 = parseFloat(document.getElementById('dy1').value);
-    const dy2 = parseFloat(document.getElementById('dy2').value);
-    const dy3 = parseFloat(document.getElementById('dy3').value);
+    const dy1   = parseFloat(document.getElementById('dy1').value);
+    const dy2   = parseFloat(document.getElementById('dy2').value);
+    const dy3   = parseFloat(document.getElementById('dy3').value);
+    const preco = parseFloat(document.getElementById('preco-teto').value);
+
     if (isNaN(dy1) || isNaN(dy2) || isNaN(dy3)) {
-      alert('Preencha os 3 anos de dividendos.');
+      alert('Preencha os dividendos dos 3 anos.');
       return;
     }
+
     const media = (dy1 + dy2 + dy3) / 3;
-    const teto = media / 0.06;
+    const teto  = media / 0.06;
+
     document.getElementById('rt-media').textContent = 'R$ ' + media.toFixed(2);
-    document.getElementById('rt-teto').textContent = 'R$ ' + teto.toFixed(2);
-    const verdict = document.getElementById('rt-verdict');
-    verdict.textContent = 'Não pague mais que R$ ' + teto.toFixed(2) + ' por essa ação';
-    verdict.className = 'result-verdict ok';
+    document.getElementById('rt-teto').textContent  = 'R$ ' + teto.toFixed(2);
+
+    const v = document.getElementById('rt-verdict');
+    if (!isNaN(preco) && preco > 0) {
+      if (preco <= teto) {
+        v.textContent = '✔ Preço atual (R$ ' + preco.toFixed(2) + ') está abaixo do teto — pode comprar!';
+        v.className   = 'result-verdict verdict-ok';
+      } else {
+        v.textContent = '✘ Preço atual (R$ ' + preco.toFixed(2) + ') está acima do teto — aguarde uma queda';
+        v.className   = 'result-verdict verdict-bad';
+      }
+    } else {
+      v.textContent = 'Não pague mais que R$ ' + teto.toFixed(2) + ' por essa ação';
+      v.className   = 'result-verdict verdict-ok';
+    }
+
     document.getElementById('res-teto').classList.add('show');
+  }
+
+  /* ── NOTA COMPLETA ── */
+  function calcNota() {
+    const pl       = parseFloat(document.getElementById('n-pl').value);
+    const pvp      = parseFloat(document.getElementById('n-pvp').value);
+    const dy       = parseFloat(document.getElementById('n-dy').value);
+    const roe      = parseFloat(document.getElementById('n-roe').value);
+    const vpa      = parseFloat(document.getElementById('n-vpa').value);
+    const lpa      = parseFloat(document.getElementById('n-lpa').value);
+    const preco    = parseFloat(document.getElementById('n-preco').value);
+    const teto     = parseFloat(document.getElementById('n-teto').value);
+    const grafico  = document.getElementById('n-grafico').value;
+    const prejuizo = document.getElementById('n-prejuizo').value;
+
+    if ([pl, pvp, dy, roe, vpa, lpa, preco].some(isNaN)) {
+      alert('Preencha todos os campos numéricos.');
+      return;
+    }
+
+    const graham = Math.sqrt(22.5 * vpa * lpa);
+
+    const criterios = [
+      { label: 'P/L < 15',                      detalhe: 'P/L = ' + pl,                                           ok: pl < 15 },
+      { label: 'P/VP < 1,5',                     detalhe: 'P/VP = ' + pvp,                                         ok: pvp < 1.5 },
+      { label: 'DY > 5%',                        detalhe: 'DY = ' + dy + '%',                                      ok: dy > 5 },
+      { label: 'Gráfico sem tendência de queda', detalhe: grafico === 'nao' ? 'Lateral/Alta' : 'Em queda',         ok: grafico === 'nao' },
+      { label: 'Preço < Graham (R$ ' + graham.toFixed(2) + ')', detalhe: 'Preço = R$ ' + preco.toFixed(2),        ok: preco < graham },
+      { label: 'Sem prejuízo nos últimos 3–5 anos', detalhe: prejuizo === 'nao' ? 'Sem prejuízo' : 'Com prejuízo', ok: prejuizo === 'nao' },
+      { label: 'Preço < Preço Teto',             detalhe: isNaN(teto) ? 'Teto não informado' : 'Teto = R$ ' + teto.toFixed(2), ok: !isNaN(teto) && preco < teto },
+      { label: 'ROE > 15%',                      detalhe: 'ROE = ' + roe + '%',                                   ok: roe > 15 },
+    ];
+
+    const total = criterios.filter(c => c.ok).length;
+    const nota  = (total * 1.25).toFixed(2);
+
+    const lista = document.getElementById('check-list');
+    lista.innerHTML = criterios.map(c => `
+      <li class="check-item ${c.ok ? 'pass' : 'fail'}">
+        <span>${c.label} <span style="color:var(--muted); font-size:0.72rem;">(${c.detalhe})</span></span>
+        <span class="${c.ok ? 'icon-pass' : 'icon-fail'}">${c.ok ? '✔' : '✘'}</span>
+      </li>
+    `).join('');
+
+    const res = document.getElementById('nota-result');
+    res.classList.add('show');
+
+    if (parseFloat(nota) >= 8.0) {
+      res.className = 'nota-result show aprovada';
+      res.innerHTML = '✔ APROVADA — Nota ' + nota + ' / 10,0<br/><small style="font-weight:400; font-size:0.8rem;">Passou em ' + total + ' de 8 critérios</small>';
+    } else {
+      res.className = 'nota-result show reprovada';
+      res.innerHTML = '✘ REPROVADA — Nota ' + nota + ' / 10,0<br/><small style="font-weight:400; font-size:0.8rem;">Passou em ' + total + ' de 8 critérios (mínimo para aprovação: nota 8,0)</small>';
+    }
+
+    res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 </script>
 </body>
